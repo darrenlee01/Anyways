@@ -49,6 +49,7 @@ class Conversation:
         # print("PrevInputHW: ", self.prevInputHW)
         # print("COMPARISON: ", self.compare(self.promptHW,curInputHW))
         if self.compare(self.promptHW,curInputHW) > self.threshold:
+            self.prevInputHW = ""
             print("--------------------good, on topic--------------------")
             return 0
         elif self.prevInputHW != "":
