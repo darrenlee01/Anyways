@@ -21,11 +21,10 @@ audio_stream = p.open(
    input=True,
 )
 
-prompt = "We want to discuss our musical background. We want to talk about our personal knowledge on music and experience with music such as instruments, music theory, and listening to songs. We will talk about the role music has played in our life so far and what we grew up listening to. "
-
+prompt = "We want to discuss about ideas for the hackathon Tartanhacks. Our group is interested in creating a project that uses artificial intelligence or machine learning. We may create an app, website, or chrome extension."
 prompt_food = "We are talking about the Bay Area restaurants. We are discussing food options at the Bay Area and how to get to different food. We are considering American food and Korean food."
 
-conv = Conversation(prompt_food)
+conv = Conversation(prompt)
 
 async def speech_to_text():
     """
@@ -68,7 +67,9 @@ async def speech_to_text():
 
                         if text != "":
                             # sentence to number function
-                            conv.hear_sentence(text)
+                            res = conv.hear_sentence(text)
+                            if res == 2:
+                                conv.addTopic()
                             print(text)
                 except Exception as e:
                     print(f'Something went wrong RECEIVE DATA. Error code was {e}')
@@ -77,7 +78,7 @@ async def speech_to_text():
         data_sent, data_received = await asyncio.gather(send_data(), receive_data())
 
 
-while True:
-    asyncio.run(speech_to_text())
+# while True:
+asyncio.run(speech_to_text())
 
 
