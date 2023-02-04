@@ -64,7 +64,7 @@ async def speech_to_text():
                     received_msg = await ws_connection.recv()
                     if json.loads(received_msg)["message_type"] == "FinalTranscript":
                         text = json.loads(received_msg)['text']
-
+                        # print(text)
                         if text != "":
                             # sentence to number function
                             res = conv.hear_sentence(text)
@@ -78,7 +78,7 @@ async def speech_to_text():
         data_sent, data_received = await asyncio.gather(send_data(), receive_data())
 
 
-# while True:
-asyncio.run(speech_to_text())
+while True:
+    asyncio.run(speech_to_text())
 
 
