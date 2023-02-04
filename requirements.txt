@@ -1,0 +1,7 @@
+spacy
+tkinter
+json
+base64
+asyncio
+pyaudio
+websockets

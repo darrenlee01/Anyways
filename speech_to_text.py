@@ -5,6 +5,8 @@ import asyncio
 import pyaudio
 import websockets
 
+from convo.Conversation import *
+
 SAMPLE_RATE=16000
 FRAMES_PER_BUFFER = 3200
 API_KEY = "92c92a45808a4ceb8d1e7e75feed261b"
@@ -19,6 +21,12 @@ audio_stream = p.open(
    channels=1,
    input=True,
 )
+
+prompt = "We want to discuss our musical background. We want to talk about our personal knowledge on music and experience with music such as instruments, music theory, and listening to songs. We will talk about the role music has played in our life so far and what we grew up listening to. "
+
+prompt_food = "We are talking about the Bay Area restaurants. We are discussing food options at the Bay Area and how to get to different food. We are considering American food and Korean food."
+
+conv = Conversation(prompt_food)
 
 async def speech_to_text():
     """
@@ -58,14 +66,17 @@ async def speech_to_text():
                     received_msg = await ws_connection.recv()
                     if json.loads(received_msg)["message_type"] == "FinalTranscript":
                         text = json.loads(received_msg)['text']
-                        
-                        # sentence to number function
-                        print(text)
+
+                        if text != "":
+                            # sentence to number function
+                            conv.hear_sentence(text)
+                            print(text)
                 except Exception as e:
                     print(f'Something went wrong RECEIVE DATA. Error code was {e}')
                     break
                     
         data_sent, data_received = await asyncio.gather(send_data(), receive_data())
+
 
 while True:
     asyncio.run(speech_to_text())
