@@ -40,77 +40,6 @@ conv = Conversation(prompt)
 class RunApp():
 
 
-    # async def speech_to_text(self):
-    #     """
-    #     Asynchronous function used to perfrom real-time speech-to-text using AssemblyAI API
-    #     """
-    #     async with websockets.connect(
-    #         ASSEMBLYAI_ENDPOINT,
-    #         ping_interval=5,
-    #         ping_timeout=20,
-    #         extra_headers=(('Authorization', API_KEY), ),
-    #     ) as ws_connection:
-    #         await asyncio.sleep(0.1)
-    #         await ws_connection.recv()
-    #         print('Websocket connection initialised')
-            
-    #         async def send_data():
-    #             """
-    #             Asynchronous function used for sending data
-    #             """
-    #             while True:
-    #                 try:
-    #                     # if not self.is_playing:
-    #                     #     return True
-    #                     print("sending data")
-                                
-    #                     data = audio_stream.read(FRAMES_PER_BUFFER)
-    #                     data = base64.b64encode(data).decode('utf-8')
-    #                     await ws_connection.send(json.dumps({'audio_data': str(data)}))
-    #                 except Exception as e:
-    #                     break
-    #                 await asyncio.sleep(0.01)
-    #             return True
-            
-    #         async def receive_data():
-    #             """
-    #             Asynchronous function used for receiving data
-    #             """
-    #             while True:
-    #                 try:
-    #                     # if not self.is_playing:
-    #                     #     return True
-    #                     print("receive data")
-    #                     received_msg = await ws_connection.recv()
-    #                     # print(received_msg)
-    #                     if json.loads(received_msg)["message_type"] == "FinalTranscript":
-    #                         text = json.loads(received_msg)['text']
-
-    #                         if text != "":
-    #                             # sentence to number function
-    #                             # res = conv.hear_sentence(text)
-    #                             # if res == 2:
-    #                             #     print("2222222222")
-    #                             #     new_topic = conv.getPropN()
-    #                             #     self.end_prev_display()
-    #                             #     self.start_display_2(new_topic)
-    #                             #     conv.addTopic()
-                                    
-    #                             # elif res == 0 or res == 1:
-    #                             #     print("0000000 or 111111")
-    #                             #     self.end_prev_display()
-    #                             #     self.start_display_1()
-    #                             # elif res == 3:
-    #                             #     print("333333333333")
-    #                             #     self.end_prev_display()
-    #                             #     self.start_display_3()
-                            
-    #                             print(text)
-    #                 except Exception as e:
-    #                     print(f'Something went wrong RECEIVE DATA. Error code was {e}')
-    #                     break
-
-    #         data_sent, data_received = await asyncio.gather(send_data(), receive_data())
     def end_prev_display(self):
         if self.display_num == 1:
             self.end_display_1()
@@ -173,6 +102,7 @@ class RunApp():
                                     self.end_prev_display()
                                     self.start_display_2(new_topic)
                                     conv.addTopic()
+                                    self.listen = False
                                     
                                 elif res == 0 or res == 1:
                                     # print("0000000 or 111111")
@@ -219,11 +149,13 @@ class RunApp():
         conv.addTopic()
         self.end_prev_display()
         self.start_display_1()
+        self.listen = True
         return
 
     def no_function(self):
         self.end_prev_display()
         self.start_display_2()
+        self.listen = True
         return 
     
     def ask_discuss(self):
@@ -273,8 +205,10 @@ class RunApp():
         self.offtopic_image.pack()
         self.yes_button.place(x=50, y=400)
         self.no_button.place(x=50, y=500)
-        self.text_2["text"] = new_topic
-        self.text_2.place(x = 100, y = 200)
+        # self.text_2["text"] = new_topic
+        # self.text_2.place(x = 100, y = 200)
+
+        print(new_topic)
 
     
     def end_display_2(self):
