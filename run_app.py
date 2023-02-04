@@ -30,61 +30,7 @@ prompt_food = "We are talking about the Bay Area restaurants. We are discussing 
 
 conv = Conversation(prompt_food)
 
-async def speech_to_text():
-    """
-    Asynchronous function used to perfrom real-time speech-to-text using AssemblyAI API
-    """
-    async with websockets.connect(
-           ASSEMBLYAI_ENDPOINT,
-           ping_interval=5,
-           ping_timeout=20,
-           extra_headers=(('Authorization', API_KEY), ),
-    ) as ws_connection:
-        await asyncio.sleep(0.1)
-        await ws_connection.recv()
-        print('Websocket connection initialised')
-        
-        async def send_data():
-            """
-            Asynchronous function used for sending data
-            """
-            while True:
-                try:
-                    
-                    data = audio_stream.read(FRAMES_PER_BUFFER)
-                    data = base64.b64encode(data).decode('utf-8')
-                    # print("sending:", data)
-                    await ws_connection.send(json.dumps({'audio_data': str(data)}))
-                except Exception as e:
-                    # print(f'Something went wrong SEND DATA. Error code was {e}')
-                    break
-                await asyncio.sleep(0.01)
-            return True
-        
-        async def receive_data():
-            """
-            Asynchronous function used for receiving data
-            """
-            while True:
-                try:
-                    # print("receiving")
-                    received_msg = await ws_connection.recv()
-                    # print(json.loads(received_msg))
-                    if json.loads(received_msg)["message_type"] == "FinalTranscript":
-                        text = json.loads(received_msg)['text']
 
-                        if text != "":
-                            # sentence to number function
-                            # res = conv.hear_sentence(text)
-                            # if res == 2:
-                            #     conv.addTopic()
-                            print(text)
-                except Exception as e:
-                    print(f'Something went wrong RECEIVE DATA. Error code was {e}')
-                    break
-        # print("1111111")
-        data_sent, data_received = await asyncio.gather(send_data(), receive_data())
-        # print("222222")
 
 
 
@@ -92,11 +38,73 @@ async def speech_to_text():
 
 class RunApp():
 
+    async def speech_to_text(self):
+        """
+        Asynchronous function used to perfrom real-time speech-to-text using AssemblyAI API
+        """
+        async with websockets.connect(
+            ASSEMBLYAI_ENDPOINT,
+            ping_interval=5,
+            ping_timeout=20,
+            extra_headers=(('Authorization', API_KEY), ),
+        ) as ws_connection:
+            await asyncio.sleep(0.1)
+            await ws_connection.recv()
+            print('Websocket connection initialised')
+            
+            async def send_data():
+                """
+                Asynchronous function used for sending data
+                """
+                while True:
+                    try:
+                        if self.is_playing:
+                            return True
+                                
+                        data = audio_stream.read(FRAMES_PER_BUFFER)
+                        data = base64.b64encode(data).decode('utf-8')
+                        # print("sending:", data)
+                        await ws_connection.send(json.dumps({'audio_data': str(data)}))
+                    except Exception as e:
+                        # print(f'Something went wrong SEND DATA. Error code was {e}')
+                        break
+                    await asyncio.sleep(0.01)
+                return True
+            
+            async def receive_data():
+                """
+                Asynchronous function used for receiving data
+                """
+                while True:
+                    try:
+                        # print("receiving")
+                        if self.is_playing:
+                            return True
+                        received_msg = await ws_connection.recv()
+                        # print(json.loads(received_msg))
+                        if json.loads(received_msg)["message_type"] == "FinalTranscript":
+                            text = json.loads(received_msg)['text']
+
+                            if text != "":
+                                # sentence to number function
+                                res = conv.hear_sentence(text)
+                                if res == 2:
+                                    conv.addTopic()
+                                print(text)
+                    except Exception as e:
+                        print(f'Something went wrong RECEIVE DATA. Error code was {e}')
+                        break
+            # print("1111111")
+            data_sent, data_received = await asyncio.gather(send_data(), receive_data())
+            # print("222222")
+
+
     def run_speech_to_text(self):
-        while True:
-            if not self.is_playing:
-                asyncio.run(speech_to_text())
-                # print("hi")
+        asyncio.run(self.speech_to_text())
+        # while True:
+        #     if not self.is_playing:
+        #         asyncio.run(speech_to_text())
+        #         print("hi")
         
 
     def change_button(self):

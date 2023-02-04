@@ -77,7 +77,7 @@ async def speech_to_text():
         data_sent, data_received = await asyncio.gather(send_data(), receive_data())
 
 
-while True:
-    asyncio.run(speech_to_text())
+# while True:
+asyncio.run(speech_to_text())
 
 
