@@ -58,6 +58,7 @@ class Conversation:
                 print("---------------two sentences on new topic: add new topic: ", self.getPropN(), "---------------")
                 return 1
             print("---------------new topic1 + new topic 2 : Anyways, let's go back to our discussion.---------------")
+            self.prevInputHW = ""
             return 3
         else:
             self.prevInputHW = curInputHW
