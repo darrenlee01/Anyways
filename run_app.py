@@ -163,7 +163,7 @@ class RunApp():
                             text = json.loads(received_msg)['text']
                             # print(text)
 
-                            if text != "":
+                            if text != "" and self.listen:
                                 # sentence to number function
                                 res = conv.hear_sentence(text)
                                 print("ressss", res)
@@ -234,6 +234,7 @@ class RunApp():
     def start_discussion(self):
         self.end_discussion_page()
         self.start_display_1()
+        self.listen = True
         # self.end_prev_display()
 
     def start_homepage(self):
@@ -291,6 +292,7 @@ class RunApp():
 
     def __init__(self):
         self.is_playing = False
+        self.listen = False
         threading.Thread(target = self.run_speech_to_text).start()
         time.sleep(2)
     
