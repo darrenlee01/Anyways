@@ -216,8 +216,14 @@ class RunApp():
     #         print(self.input_prompt)
 
     def yes_function(self):
+        conv.addTopic()
+        self.end_prev_display()
+        self.start_display_1()
         return
+
     def no_function(self):
+        self.end_prev_display()
+        self.start_display_2()
         return 
     
     def ask_discuss(self):
