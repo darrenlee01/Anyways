@@ -47,6 +47,7 @@ class RunApp():
 
     def end_discussion_page(self):
         self.input_prompt = self.text.get("1.0","end-1c")
+        print(self.input_prompt)
         self.text.pack_forget()
         self.discuss_image.pack_forget()
         self.text.place_forget()
@@ -60,8 +61,8 @@ class RunApp():
 
     def start_display_2(self):
         self.offtopic_image.pack()
-        self.yes_button.place()
-        self.no_button.place()
+        self.yes_button.place(x=50, y=400)
+        self.no_button.place(x=50, y=500)
     
     def end_display_2(self):
         self.offtopic_image.pack_forget()
@@ -96,7 +97,7 @@ class RunApp():
         ontopic = ImageTk.PhotoImage(ontopic)
         self.ontopic_image = tk.Label(self.root, image=ontopic)
 
-        offtopic = Image.open("Media/offtopic.png")
+        offtopic = Image.open("Media/new.png")
         offtopic = offtopic.resize((424, 600))
         offtopic = ImageTk.PhotoImage(offtopic)
         self.offtopic_image = tk.Label(self.root, image=offtopic)
@@ -134,7 +135,7 @@ class RunApp():
         
         no = Image.open("Media/no.png")
         self.no = ImageTk.PhotoImage(no)
-        self.no_button = tk.Button(self.root, image=self.no, borderwidth=0, command=self.no_fuction)
+        self.no_button = tk.Button(self.root, image=self.no, borderwidth=0, command=self.no_function)
 
 
         self.root.geometry("424x600")
