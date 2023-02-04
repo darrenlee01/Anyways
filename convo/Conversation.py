@@ -49,18 +49,18 @@ class Conversation:
         # print("PrevInputHW: ", self.prevInputHW)
         # print("COMPARISON: ", self.compare(self.promptHW,curInputHW))
         if self.compare(self.promptHW,curInputHW) > self.threshold:
-            print("good, on topic")
+            print("--------------------good, on topic--------------------")
             return 0
         elif self.prevInputHW != "":
             if self.compare(self.prevInputHW, curInputHW) > self.threshold:
                 self.prevInputHW = curInputHW
-                print("two sentences on new topic: add new topic: ", self.getPropN())
+                print("---------------two sentences on new topic: add new topic: ", self.getPropN(), "---------------")
                 return 1
-            print("new topic1 + new topic 2 : Anyways, let's go back to our discussion.")
+            print("---------------new topic1 + new topic 2 : Anyways, let's go back to our discussion.---------------")
             return 3
         else:
             self.prevInputHW = curInputHW
-            print("First strike on new topic")
+            print("---------------First strike on new topic---------------")
             return 2
     
     
