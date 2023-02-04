@@ -17,11 +17,11 @@ def main():
         print(convo1.hear_sentence(sentence))
     #Mitocondria update
     convo2 = Conversation(prompt)
-    test2 = [mito1, mito2, mito3]
+    test2 = [mito1, mito2, mito3, mito1]
     print("-------------------TEST2---------------------")
     for sen in test2:
         run = convo2.hear_sentence(sen)
-        if run == 1:
+        if run == 2:
             propn = convo2.getPropN()
             print("Nouns: ", propn)
             convo2.addTopic()
@@ -29,9 +29,16 @@ def main():
     #Completely off topic
     print("-------------------TEST3---------------------")
     convo3 = Conversation(prompt)
-    test3 = [music1, shopping1, mito1]
+    test3 = [music1, shopping1, mito1, "I like bread", "monkeys have fingers"]
     for sen in test3:
         run = convo3.hear_sentence(sen)
+        print(run)
+
+    print("-------------------TEST4---------------------")
+    convo4 = Conversation(prompt)
+    test4 = [mito1, shopping1, mito2, shopping1]
+    for sen in test4:
+        run = convo4.hear_sentence(sen)
         print(run)
     
 main()
