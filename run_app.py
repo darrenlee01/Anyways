@@ -63,10 +63,8 @@ class RunApp():
                                 
                         data = audio_stream.read(FRAMES_PER_BUFFER)
                         data = base64.b64encode(data).decode('utf-8')
-                        # print("sending:", data)
                         await ws_connection.send(json.dumps({'audio_data': str(data)}))
                     except Exception as e:
-                        # print(f'Something went wrong SEND DATA. Error code was {e}')
                         break
                     await asyncio.sleep(0.01)
                 return True
@@ -77,11 +75,9 @@ class RunApp():
                 """
                 while True:
                     try:
-                        # print("receiving")
                         if self.is_playing:
                             return True
                         received_msg = await ws_connection.recv()
-                        # print(json.loads(received_msg))
                         if json.loads(received_msg)["message_type"] == "FinalTranscript":
                             text = json.loads(received_msg)['text']
 
@@ -94,17 +90,12 @@ class RunApp():
                     except Exception as e:
                         print(f'Something went wrong RECEIVE DATA. Error code was {e}')
                         break
-            # print("1111111")
+
             data_sent, data_received = await asyncio.gather(send_data(), receive_data())
-            # print("222222")
 
 
     def run_speech_to_text(self):
         asyncio.run(self.speech_to_text())
-        # while True:
-        #     if not self.is_playing:
-        #         asyncio.run(speech_to_text())
-        #         print("hi")
         
 
     def change_button(self):
