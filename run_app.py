@@ -90,14 +90,12 @@ class RunApp():
                         received_msg = await ws_connection.recv()
                         if json.loads(received_msg)["message_type"] == "FinalTranscript":
                             text = json.loads(received_msg)['text']
-                            # print(text)
 
                             if text != "" and self.listen:
                                 # sentence to number function
                                 res = conv.hear_sentence(text)
-                                print("ressss", res)
+
                                 if res == 2:
-                                    # print("2222222222")
                                     new_topic = conv.getPropN()
                                     self.end_prev_display()
                                     self.start_display_2(new_topic)
@@ -105,23 +103,14 @@ class RunApp():
                                     self.listen = False
                                     
                                 elif res == 0 or res == 1:
-                                    # print("0000000 or 111111")
                                     self.end_prev_display()
                                     self.start_display_1()
                                 else:
-                                    # print("333333333333")
                                     self.end_prev_display()
                                     self.start_display_3()
                             
-                                # print(text)
+                                print(text)
 
-                            # if text != "":
-                                
-                            #     # sentence to number function
-                            #     res = conv.hear_sentence(text)
-                            #     if res == 2:
-                            #         conv.addTopic()
-                            #     print(text)
                     except Exception as e:
                         print(f'Something went wrong RECEIVE DATA. Error code was {e}')
                         break
@@ -131,19 +120,7 @@ class RunApp():
 
     def run_speech_to_text(self):
         asyncio.run(self.speech_to_text())
-        
-
-    # def change_button(self):
-    #     if self.is_playing:
-    #         self.play_button["image"] = self.playBtn
-    #         self.text.pack(padx=20, pady=20, anchor=tk.CENTER)
-    #         self.label.pack(padx=20, pady=20, side = tk.TOP)
-    #     else:
-    #         self.play_button["image"] = self.pauseBtn
-    #         self.input_prompt = self.text.get("1.0","end-1c") #do this only at the beginning
-    #         self.text.pack_forget()
-    #         self.label.pack_forget()
-    #         print(self.input_prompt)
+    
 
     def yes_function(self):
         conv.addTopic()
@@ -185,13 +162,11 @@ class RunApp():
 
     def end_discussion_page(self):
         self.input_prompt = self.text.get("1.0","end-1c")
-        # print(self.input_prompt)
         self.text.pack_forget()
         self.discuss_image.pack_forget()
         self.text.place_forget()
         self.start_discuss_button.place_forget()
         self.is_playing = True
-        # threading.Thread(target = self.run_speech_to_text).start()
 
     def start_display_1(self): 
         self.display_num = 1
@@ -205,10 +180,8 @@ class RunApp():
         self.offtopic_image.pack()
         self.yes_button.place(x=50, y=400)
         self.no_button.place(x=50, y=500)
-        # self.text_2["text"] = new_topic
-        # self.text_2.place(x = 100, y = 200)
 
-        print(new_topic)
+        # print(new_topic)
 
     
     def end_display_2(self):
@@ -228,7 +201,7 @@ class RunApp():
         self.is_playing = False
         self.listen = False
         threading.Thread(target = self.run_speech_to_text).start()
-        time.sleep(2)
+        time.sleep(5)
     
         self.root = tk.Tk()
         self.text_2 = tk.Label(self.root)
@@ -264,19 +237,15 @@ class RunApp():
         getback = ImageTk.PhotoImage(getback)
         self.getback_image = tk.Label(self.root, image=getback)
 
-        #self.label = tk.Label(self.root, text="Enter discussion prompt: ", font=("Roboto" ,14))
-        #self.label.pack(padx=20, pady=20, side = tk.TOP)
         self.text = tk.Text(self.root, height = 10, width = 39, borderwidth=0)
 
         play = Image.open("Media/icons8-play-64.png")
         play = play.resize((64, 64))
-        # self.playBtn = ImageTk.PhotoImage(play) 
 
         pause = Image.open("Media/icons8-pause-64.png")
         pause = pause.resize((64, 64))
         self.pauseBtn = ImageTk.PhotoImage(pause) 
 
-        # self.play_button = tk.Button(self.root, image=self.playBtn, command = self.change_button, height = 64, width = 64, borderwidth=0)
         start = Image.open("Media/start.png")
         self.start_img = ImageTk.PhotoImage(start)
         self.start_button = tk.Button(self.root, image=self.start_img, borderwidth=0, command=self.ask_discuss)
@@ -297,7 +266,6 @@ class RunApp():
 
         self.root.geometry("424x600")
 
-        # threading.Thread(target = self.run_speech_to_text).start()
         
         self.root.mainloop()
 

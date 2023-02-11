@@ -70,7 +70,7 @@ class Conversation:
             self.prevInputHW = []
             print("--------------------good, on topic--------------------")
             return 0
-        elif len(self.prevInputHW) >= 3:
+        elif len(self.prevInputHW) >= 2:
             self.prevInputHW.append(curInputHW)
             if self.compare_prevs() >= 0.6:
                 print("---------------two sentences on new topic: add new topic: ", self.getPropN(), "---------------")
