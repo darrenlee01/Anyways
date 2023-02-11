@@ -2,6 +2,9 @@
 
 ## Description
 
+Too often, conversations steer into multiple directions as it can be hard to stay focused on one topic. Although this is acceptable for casual conversations with friends, team meetings, business meetings, and many other converstaions often need to be focused on one topic to have an effective discussion. Our project solves this issue by implementing NLP with topic detection and keyword similarity to find how much the conversation has deviated from the original topic. When our AI detects that the discussion is on-topic, the app displays "Good, on topic!". However, when the AI detects that a different thread of conversation has started, the app displays "Anyways... get back to your disussion!". If the conversation has continuously been going towards 1 particular topic, then the AI undersatnds this and displays "You started talking about ... . Is this related to your discussion?".
+
+
 ## Technologies Used
 
 ### Real-time Speech to Text
