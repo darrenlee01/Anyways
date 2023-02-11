@@ -10,9 +10,9 @@
 - Utilize asynchronous and multithreading to concurrently listen to audio, convert audio to base64 and send audio to API, receive text translation
 
 ### Conversation Monitoring Algorithm
-Keywords extracted using spaCy
-Tokenize words in sentence to get noun, proper noun, and adjective as keywords
-Analyze similarity between keywords
+- Keywords extracted using spaCy
+- Tokenize words in sentence to get noun, proper noun, and adjective as keywords
+- Analyze similarity between keywords
 
 
 ## Presentation
